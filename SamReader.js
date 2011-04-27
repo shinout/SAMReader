@@ -42,7 +42,6 @@ function SamReader(rstream) {
 }
 
 SamReader.prototype = new EventEmitter();
-console.log(SamReader);
 
 SamReader.SamAlignment= SamAlignment;
 SamReader.SamHeader= SamHeader;

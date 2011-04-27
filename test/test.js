@@ -4,6 +4,69 @@ var SamReader = require('../SamReader');
 var CIGAR = require('../CIGAR');
 var test = require('./shinout.test');
 
+
+/* CIGAR test */
+
+[ '108M'
+, '16M36D58M'
+, '12M36S12M30D'
+].forEach(function(v) {
+  var cigar = new CIGAR(v);
+  test('equal', cigar.matchL(), 0, cigar.str + ': L matched incorrectly');
+  test('equal', cigar.matchR(), 0, cigar.str + ': R matched incorrectly');
+});
+test('result', 'CIGAR NO Matching test');
+
+// L match
+[ '19S89M'
+, '16S36D58M12I'
+, '12S3M30D30I13M'
+].forEach(function(v) {
+  var cigar = new CIGAR(v);
+  test('ok', cigar.matchL() > 0 , cigar.str + ': L didn\'t matched');
+  test('equal', cigar.matchR(), 0, cigar.str + ': R matched incorrectly');
+});
+test('result', 'CIGAR L Matching test');
+
+
+// R match
+[ '89M33S'
+, '16M36D58M12S'
+, '3M30D30I13S'
+].forEach(function(v) {
+  var cigar = new CIGAR(v);
+  test('equal', cigar.matchL(), 0, cigar.str + ': L matched incorrectly');
+  test('ok', cigar.matchR() > 0 , cigar.str + ': R didn\'t matched');
+});
+test('result', 'CIGAR R Matching test');
+
+
+// match length
+(function(){
+  var cigar = new CIGAR('23S83M');
+  test('equal', cigar.matchL(), 23, cigar.str + ': L invalid length');
+
+  cigar = new CIGAR('23S3D83M');
+  test('equal', cigar.matchL(), 23, cigar.str + ': L with D invalid length');
+
+  cigar = new CIGAR('23S3I83M17S');
+  test('equal', cigar.matchL(), 26, cigar.str + ': L with I invalid length');
+  test('equal', cigar.matchR(), 17, cigar.str + ': R invalid length');
+
+  cigar = new CIGAR('23S6M3D81M1D19S');
+  test('equal', cigar.matchL(), 23 + 6, cigar.str + ': L with D,M invalid length');
+  test('equal', cigar.matchR(), 19, cigar.str + ': R with D invalid length');
+
+  cigar = new CIGAR('23S6M4I33M3I4M19S');
+  test('equal', cigar.matchL(), 23 + 6 + 4, cigar.str + ': L with I,M invalid length');
+  test('equal', cigar.matchR(), 19 + 4 + 3, cigar.str + ': R with I,M invalid length');
+
+  test('result', 'CIGAR Matching length test');
+})();
+
+
+
+
 /* SamAlignment static function unit test */
 var alflgs = SamAlignment.parseFlags(4095)
 test('deepEqual', alflgs.multiple, true, 'bit flag failure');
