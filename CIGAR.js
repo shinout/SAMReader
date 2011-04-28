@@ -23,8 +23,8 @@ CIGAR.prototype.init = function(cigar) {
     if (i & 1) {
       if (v == 'M') {
         if ( maxMkey == null) {
-          anchor  = key;
-          maxMkey = key;
+          anchor  = key; // first M position
+          maxMkey = key; // max M position
         }
         else if (maxMkey !=null && arr[maxMkey].num < arr[key].num) {
           maxMkey = key;
@@ -71,7 +71,7 @@ CIGAR.prototype.matchR = function() {
 };
 
 
-CIGAR.prototype.getGap = function(pos) {
+CIGAR.prototype.getGap = function() {
   if (this.gap != null)
     return this.gap;
   if (this.maxMkey < this.anchor)
@@ -92,7 +92,7 @@ CIGAR.prototype.getLBreak = function(pos) {
     return pos;
   }
   return pos + this.getGap();
-}
+};
 
 CIGAR.prototype.getRBreak = function(pos) {
   if (!this.matchR()) return -1;
@@ -101,7 +101,7 @@ CIGAR.prototype.getRBreak = function(pos) {
   if (this.anchor >= this.maxMkey) {
     return pos + this.arr[this.anchor].num;
   }
-  return pos + this.getGap() + this.arr[this.anchor].num;
+  return pos + this.getGap() + this.arr[this.maxMkey].num;
 };
 
 CIGAR.lenCount = function(el) {

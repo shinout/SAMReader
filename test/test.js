@@ -64,6 +64,42 @@ test('result', 'CIGAR R Matching test');
   test('result', 'CIGAR Matching length test');
 })();
 
+// gap test 
+(function(){
+  var cigar = new CIGAR('23S83M');
+  test('equal', cigar.getGap(), 0, cigar.str + ': invalid gap');
+  test('equal', cigar.getLBreak(101), 101, cigar.str + ': invalid LBreak');
+
+  var cigar = new CIGAR('83M23S');
+  test('equal', cigar.getGap(), 0, cigar.str + ': invalid gap');
+  test('equal', cigar.getRBreak(101), 101 + 83, cigar.str + ': invalid RBreak');
+
+  var cigar = new CIGAR('45S6M2D43M11S');
+  test('equal', cigar.getGap(), 8, cigar.str + ': invalid gap');
+  test('equal', cigar.getLBreak(101), 101 + 8 , cigar.str + ': invalid LBreak');
+  test('equal', cigar.getRBreak(101), 101 + 8 + 43, cigar.str + ': invalid RBreak');
+
+  var cigar = new CIGAR('45S6M2I43M11S');
+  test('equal', cigar.getGap(), 6, cigar.str + ': invalid gap');
+  test('equal', cigar.getLBreak(101), 101 + 6 , cigar.str + ': invalid LBreak');
+  test('equal', cigar.getRBreak(101), 101 + 6 + 43, cigar.str + ': invalid RBreak');
+
+  var cigar = new CIGAR('45S6M2I43M3D11S');
+  test('equal', cigar.getGap(), 6, cigar.str + ': invalid gap');
+  test('equal', cigar.getLBreak(101), 101 + 6 , cigar.str + ': invalid LBreak');
+  test('equal', cigar.getRBreak(101), 101 + 6 + 43, cigar.str + ': invalid RBreak');
+
+  var cigar = new CIGAR('45S6M2I43M3I11S');
+  test('equal', cigar.getGap(), 6, cigar.str + ': invalid gap');
+  test('equal', cigar.getLBreak(101), 101 + 6 , cigar.str + ': invalid LBreak');
+  test('equal', cigar.getRBreak(101), 101 + 6 + 43, cigar.str + ': invalid RBreak');
+
+  test('result', 'CIGAR Gap test');
+})();
+
+process.exit();
+
+
 
 
 
