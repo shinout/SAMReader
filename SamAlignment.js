@@ -29,6 +29,7 @@ function SamAlignment(samline) {
   this.seq     = data[9];
   this.qual    = data[10];
   this.options = data.splice(11); // lazy
+  this.valid   = true;
 }
 
 

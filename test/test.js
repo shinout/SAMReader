@@ -138,7 +138,7 @@ var line = 'SAMPLE#0\t163\tchr1\t11786\t0\t75M\t=\t11920\t209\tATTTGCCGGATTTCCTT
 
 var sa = new SamAlignment(line);
 
-test('equal', Object.keys(sa).length, 13, 'invalid prop length');
+test('equal', Object.keys(sa).length, 14, 'invalid prop length');
 test('equal', sa.name, 'SAMPLE#0', 'invalid prop: name');
 test('equal', typeof sa.flags, 'object', 'invaid prop type: object');
 test('deepEqual', sa.flags.last, true, 'invaid prop: flags.last');
@@ -206,7 +206,7 @@ sam.on('header', function(hd) {
 });
 
 sam.on('alignment', function(data) {
-  console.log(data);
+  //console.log(data);
 });
 
 sam.on('end', function() {

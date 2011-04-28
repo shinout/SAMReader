@@ -31,7 +31,7 @@ function SamReader(rstream) {
     }
 
     var samobj = new SamAlignment(line);
-    if (samobj) {
+    if (samobj.valid) {
       self.emit('alignment', samobj);
     }
   });
