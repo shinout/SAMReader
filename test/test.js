@@ -41,6 +41,23 @@ test('result', 'CIGAR L Matching test');
 test('result', 'CIGAR R Matching test');
 
 
+// total length
+(function(){
+  var cigar = new CIGAR('23S83M');
+  test('equal', cigar.len(), 23+83, cigar.str + ': invalid length');
+
+  cigar = new CIGAR('23S3D83M');
+  test('equal', cigar.len(), 23 + 83, cigar.str + ': with D invalid length');
+
+  cigar = new CIGAR('23S3I83M17S');
+  test('equal', cigar.len(), 23 + 3 + 83 + 17, cigar.str + ': with I invalid length');
+
+  test('result', 'CIGAR Matching length test');
+})();
+
+
+
+
 // match length
 (function(){
   var cigar = new CIGAR('23S83M');

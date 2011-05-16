@@ -70,6 +70,16 @@ CIGAR.prototype.matchR = function() {
   return ret;
 };
 
+CIGAR.prototype.len = function() {
+  if (this._len) return this._len;
+  var len = 0;
+  this.arr.forEach(function(v) {
+    len += CIGAR.lenCount(v);
+  });
+  this._len = len;
+  return len;
+};
+
 
 CIGAR.prototype.getGap = function(pos) {
   if (this.gap != null)
