@@ -16,14 +16,12 @@ var SamHeader = require('./SamHeader');
  *
  */
 function SamReader(rstream) {
-  this.rstream = rstream || process.stdin;
-  if (process.stdin === this.rstream) {
-    process.stdin.resume();
-  }
-  var lstream = new LineStream(rstream, {trim: true});
+  this.rstream = rstream;
+
+  var lstream = new LineStream(rstream);
   var self = this;
 
-  lstream.on('line', function(line) {
+  lstream.on('data', function(line) {
     if (line.charAt(0) == '@') {
       var header = new SamHeader(line);
       self.emit('header', header);
