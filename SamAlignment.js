@@ -98,8 +98,14 @@ SamAlignment.registerProps = function(sam) {
           this.rname = null;
           this.cigar = null;
         }
+        else {
+          this.pos = Number(this.pos);
+        }
         if (!this.mapq || this.mapq > 255 || this.mapq < 0) {
           this.mapq = 255;
+        }
+        else {
+          this.mapq = Number(this.mapq);
         }
         if (this.pnext == null || this.pnext == 0) {
           this.rnext = null;
