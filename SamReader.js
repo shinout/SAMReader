@@ -7,6 +7,7 @@ var LineStream = require('linestream');
 var EventEmitter = require('events').EventEmitter;
 var SamAlignment= require('./SamAlignment');
 var SamHeader = require('./SamHeader');
+var CIGAR = require('./CIGAR');
 
 /**
  * SamReader
@@ -43,5 +44,6 @@ SamReader.prototype = new EventEmitter();
 
 SamReader.SamAlignment= SamAlignment;
 SamReader.SamHeader= SamHeader;
+SamReader.CIGAR = CIGAR;
 
 module.exports = SamReader;
