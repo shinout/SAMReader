@@ -179,6 +179,15 @@ CIGAR.prototype.getRBreak = function(pos) {
   return pos + this.getGap() + this.arr[this.maxMkey].num;
 };
 
+
+/**
+ * get matched length
+ **/
+CIGAR.prototype.getMatchedLen = function() {
+  return this.len() - this.matchL() - this.matchR();
+};
+
+
 /**
  * gap between reference and actual read
  *
@@ -212,6 +221,11 @@ CIGAR.lenCount = function(el) {
 CIGAR.refLenCount = function(el) {
   //return (el.type.match(/[MS=XDNP]/)) ? el.num : 0;
   return (el.type.match(/[MS=XDN]/)) ? el.num : 0;
+};
+
+
+CIGAR.prototype.toString = function() {
+  return this.str;
 };
 
 module.exports = CIGAR;
